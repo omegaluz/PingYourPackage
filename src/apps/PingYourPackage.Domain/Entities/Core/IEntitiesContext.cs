@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PingYourPackage.Domain.Entities {
 
-    public class EntitiesContext : DbContext, IEntitiesContext {
+    public interface IEntitiesContext : IDisposable {
 
-        public EntitiesContext() : base("PingYourPackage") { }
-        
         public IDbSet<ShipmentType> PackageTypes { get; set; }
         public IDbSet<Affiliate> PackageSenders { get; set; }
         public IDbSet<Shipment> Shipments { get; set; }
@@ -21,8 +14,7 @@ namespace PingYourPackage.Domain.Entities {
         public IDbSet<Role> Roles { get; set; }
         public IDbSet<UserInRole> UserInRoles { get; set; }
 
-        public new IDbSet<T> Set<T>() {
-            return this.Set<T>();
-        }
+        int SaveChanges();
+        new IDbSet<T> Set<T>();
     }
 }
